@@ -1,7 +1,7 @@
 GoogleCapstoneClean
 ================
 
-# Running packages
+### Running packages
 
 ``` r
 library("dplyr")
@@ -70,7 +70,7 @@ library("lubridate")
     ## 
     ##     date, intersect, setdiff, union
 
-# Reading each and every individual file
+### Reading each and every individual file
 
 ``` r
 Jan2021 <- read_csv("/Users/clement/Documents/Google Capstone One/CSV/Jan2021.csv")
@@ -216,7 +216,7 @@ Dec2021 <- read_csv("/Users/clement/Documents/Google Capstone One/CSV/Dec2021.cs
     ## ℹ Use `spec()` to retrieve the full column specification for this data.
     ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 
-# Organizing the files into their respective seasons
+### Organizing the files into their respective seasons
 
 ``` r
 Spring <- bind_rows(Dec2021, Jan2021, Feb2021)
@@ -225,7 +225,7 @@ Fall <- bind_rows(Sep2021, Oct2021, Nov2021)
 Winter <- bind_rows(Dec2021, Jan2021, Feb2021)
 ```
 
-# Putting all of the files together in a masterlist
+### Putting all of the files together in a masterlist
 
 ``` r
 cycle_data <- list.files(path = "/Users/clement/Documents/Google Capstone One/CSV", 
@@ -330,7 +330,7 @@ glimpse(cycle_data)
     ## $ end_lng            <dbl> -87.66394, -87.59246, -87.65841, -87.66394, -87.658…
     ## $ member_casual      <chr> "member", "casual", "casual", "member", "casual", "…
 
-# Check for any missing data points
+### Check for any missing data points
 
 ``` r
 sum(is.na(cycle_data))
@@ -338,13 +338,13 @@ sum(is.na(cycle_data))
 
     ## [1] 2869497
 
-# Remove unneeded columns (lat and lng)
+### Remove unneeded columns (lat and lng)
 
 ``` r
 cycle_data <- subset(cycle_data, select = -c(start_lat, start_lng, end_lat, end_lng))
 ```
 
-# Remove any and all missing data points
+### Remove any and all missing data points
 
 ``` r
 clean_data <- na.omit(cycle_data)
@@ -353,13 +353,13 @@ sum(is.na(clean_data))
 
     ## [1] 0
 
-# Find the ride length
+### Find the ride length
 
 ``` r
 clean_data$ride_length <- clean_data[,4] - clean_data[,3]
 ```
 
-# Unlist ride_length then change to hh:mm:ss
+### Unlist ride_length then change to hh:mm:ss
 
 ``` r
 clean_data$ride_length <- as.numeric(unlist(clean_data$ride_length))
@@ -369,13 +369,13 @@ clean_data$ride_length <- hms::hms(seconds_to_period(clean_data$ride_length))
 #Reference:
 <https://www.statology.org/r-list-object-cannot-be-coerced-to-type-double/>
 
-# Remove rows that have a negative ride length
+### Remove rows that have a negative ride length
 
 ``` r
 clean_data <- clean_data %>% filter(clean_data$ride_length > 0)
 ```
 
-# Find the day of the week of each trip
+### Find the day of the week of each trip
 
 ``` r
 clean_data$day_of_week <- wday(clean_data$started_at, label=TRUE) 
@@ -383,7 +383,7 @@ clean_data$day_of_week <- wday(clean_data$started_at, label=TRUE)
 
 #ReferenceL <https://stackoverflow.com/a/9216210>
 
-# Export as CSV
+### Export as CSV
 
 ``` r
 write.csv(clean_data, file="all_cycle_data.csv", row.names = FALSE)
