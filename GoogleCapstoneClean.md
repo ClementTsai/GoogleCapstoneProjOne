@@ -366,7 +366,7 @@ clean_data$ride_length <- as.numeric(unlist(clean_data$ride_length))
 clean_data$ride_length <- hms::hms(seconds_to_period(clean_data$ride_length))
 ```
 
-#Reference:
+### Reference:
 <https://www.statology.org/r-list-object-cannot-be-coerced-to-type-double/>
 
 ### Remove rows that have a negative ride length
@@ -381,7 +381,7 @@ clean_data <- clean_data %>% filter(clean_data$ride_length > 0)
 clean_data$day_of_week <- wday(clean_data$started_at, label=TRUE) 
 ```
 
-#ReferenceL <https://stackoverflow.com/a/9216210>
+### Reference <https://stackoverflow.com/a/9216210>
 
 ### Export as CSV
 
