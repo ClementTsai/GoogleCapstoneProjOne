@@ -381,7 +381,8 @@ clean_data <- clean_data %>% filter(clean_data$ride_length > 0)
 clean_data$day_of_week <- wday(clean_data$started_at, label=TRUE) 
 ```
 
-### Reference <https://stackoverflow.com/a/9216210>
+### Reference:
+<https://stackoverflow.com/a/9216210>
 
 ### Export as CSV
 
